@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class CarManager : IProductService
+    public class CarManager : ICarService
     {
 
         ICarDal _carDal;
@@ -19,7 +19,15 @@ namespace Business.Concrete
 
         public void Add(Car car)
         {
-            _carDal.Add(car);
+            if (car.DailyPrice >= 0)
+            {
+                _carDal.Add(car);
+            }
+            else
+            {
+                throw new NotImplementedException("Kiralama fiyatı sıfırdan büyük olmalıdır");
+            }
+            
         }
 
         public void Delete(Car car)
@@ -32,10 +40,6 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        public Car GetById(int id)
-        {
-           return _carDal.GetById(id);
-        }
 
         public void Update(Car car)
         {
