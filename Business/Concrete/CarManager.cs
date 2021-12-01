@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,13 +20,13 @@ namespace Business.Concrete
 
         public void Add(Car car)
         {
-            if (car.DailyPrice >= 0)
+            if (car.DailyPrice >= 0 && car.CarName.Length >= 2)
             {
                 _carDal.Add(car);
             }
             else
             {
-                throw new NotImplementedException("Kiralama fiyatı sıfırdan büyük olmalıdır");
+                throw new NotImplementedException("Kiralama fiyatı sıfırdan büyük olmalıdır veya araç adı 2 karakterden uzun olmalıdır");
             }
             
         }
@@ -40,6 +41,10 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarsDetails();
+        }
 
         public void Update(Car car)
         {
